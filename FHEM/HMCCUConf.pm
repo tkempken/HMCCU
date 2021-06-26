@@ -28,7 +28,7 @@ use vars qw(%HMCCU_CHN_DEFAULTS);
 use vars qw(%HMCCU_DEV_DEFAULTS);
 use vars qw(%HMCCU_SCRIPTS);
 
-$HMCCU_CONFIG_VERSION = '4.8.030';
+$HMCCU_CONFIG_VERSION = '4.8.031';
 
 ######################################################################
 # Map subtype to default role. Subtype is only available for HMIP
