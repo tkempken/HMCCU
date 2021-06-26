@@ -40,7 +40,8 @@ $HMCCU_CONFIG_VERSION = '4.8.030';
 	'ASIR' => 'ALARM_SWITCH_VIRTUAL_RECEIVER',
 	'FSM'  => 'SWITCH_VIRTUAL_RECEIVER',
 	'PSM'  => 'SWITCH_VIRTUAL_RECEIVER',
-	'SD'   => 'SMOKE_DETECTOR'
+	'SD'   => 'SMOKE_DETECTOR',
+	'DLST' => 'DOOR_LOCK_STATE_TRANSMITTER'
 );
 
 ######################################################################
@@ -1242,6 +1243,15 @@ $HMCCU_CONFIG_VERSION = '4.8.030';
 	substitute       => "STATE!(true|1):on,(false|0):off",
 	webCmd           => "control",
 	widgetOverride   => "control:uzsuToggle,off,on"		
+	},
+	"HmIP-DLD" => {
+	_description     => "Türschlossantrieb",
+	ccureadingfilter => "(STATE|PRESS)",
+	statedatapoint   => "1.LOCK_STATE",
+	controldatapoint => "1.LOCK_TARGET_LEVEL",
+	statevals        => "unlock:1,open:2,lock:3",
+	substitute       => "STATE!(UNLOCKED|1):unlock,(LOCKED|3):lock,(OPEN|2):open",
+	webCmd           => "lock:unlock:open"
 	},
 	"HM-LC-SW4-BA-PCB|HM-SCI-3-FM" => {
 	_description     => "4 Kanal Funk Schaltaktor für Batteriebetrieb, 3 Kanal Schließerkontakt",
