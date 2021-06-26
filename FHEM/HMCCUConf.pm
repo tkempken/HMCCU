@@ -40,8 +40,7 @@ $HMCCU_CONFIG_VERSION = '4.8.030';
 	'ASIR' => 'ALARM_SWITCH_VIRTUAL_RECEIVER',
 	'FSM'  => 'SWITCH_VIRTUAL_RECEIVER',
 	'PSM'  => 'SWITCH_VIRTUAL_RECEIVER',
-	'SD'   => 'SMOKE_DETECTOR',
-	'DLST' => 'DOOR_LOCK_STATE_TRANSMITTER'
+	'SD'   => 'SMOKE_DETECTOR'
 );
 
 ######################################################################
@@ -805,6 +804,16 @@ $HMCCU_CONFIG_VERSION = '4.8.030';
 	webCmd           => "control",
 	widgetOverride   => "control:uzsuToggle,off,on"		
 	},
+	"HmIP-DLD" => {
+	_description     => "Türschlossantrieb",
+	_channels        => "0,1",
+	ccureadingfilter => "STATE",
+	statedatapoint   => "STATE",
+	controldatapoint => "STATE",
+	statevals        => "unlock:1,open:2,lock:3",
+	substitute       => "STATE!(UNLOCKED|1):unlock,(LOCKED|3):lock,(OPEN|2):open",
+	webCmd           => "lock:unlock:open"	
+	},
 	"HM-SCI-3-FM" => {
 	_description     => "3 Kanal Schliesserkontakt",
 	_channels        => "1,2,3",
@@ -1246,7 +1255,6 @@ $HMCCU_CONFIG_VERSION = '4.8.030';
 	},
 	"HmIP-DLD" => {
 	_description     => "Türschlossantrieb",
-	ccureadingfilter => "(STATE|PRESS)",
 	statedatapoint   => "1.LOCK_STATE",
 	controldatapoint => "1.LOCK_TARGET_LEVEL",
 	statevals        => "unlock:1,open:2,lock:3",
