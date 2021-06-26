@@ -4,7 +4,7 @@
 #
 #  $Id: HMCCUConf.pm 18552 2019-02-10 11:52:28Z zap $
 #
-#  Version 4.8.030
+#  Version 4.8.031
 #
 #  Configuration parameters for HomeMatic devices.
 #
