@@ -1255,10 +1255,11 @@ $HMCCU_CONFIG_VERSION = '4.8.031';
 	},
 	"HmIP-DLD" => {
 	_description     => "Türschlossantrieb",
-	statedatapoint   => "1.LOCK_STATE",
+	cmdIcon          => "unlock:secur_open lock:secur_locked open:fts_door_right_open",
+	stripnumber      => 1,
 	controldatapoint => "1.LOCK_TARGET_LEVEL",
-	statevals        => "unlock:1,open:2,lock:3",
-	substitute       => "STATE!(UNLOCKED|1):unlock,(LOCKED|3):lock,(OPEN|2):open",
+	eventMap         => "/datapoint 1.LOCK_TARGET_LEVEL UNLOCKED:unlock/datapoint 1.LOCK_TARGET_LEVEL LCOKED:lock/datapoint 1.LOCK_TARGET_LEVEL OPEN:open/",
+	statedatapoint   => "1.LOCK_STATE",
 	webCmd           => "lock:unlock:open"
 	},
 	"HM-LC-SW4-BA-PCB|HM-SCI-3-FM" => {
