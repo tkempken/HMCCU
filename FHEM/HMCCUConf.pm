@@ -4,7 +4,7 @@
 #
 #  $Id: HMCCUConf.pm 18552 2019-02-10 11:52:28Z zap $
 
-#  Version 4.8.032
+#  Version 4.8.034
 #
 #  Configuration parameters for HomeMatic devices.
 #
@@ -28,7 +28,7 @@ use vars qw(%HMCCU_CHN_DEFAULTS);
 use vars qw(%HMCCU_DEV_DEFAULTS);
 use vars qw(%HMCCU_SCRIPTS);
 
-$HMCCU_CONFIG_VERSION = '4.8.032';
+$HMCCU_CONFIG_VERSION = '4.8.034';
 
 ######################################################################
 # Map subtype to default role. Subtype is only available for HMIP
@@ -53,7 +53,7 @@ $HMCCU_CONFIG_VERSION = '4.8.032';
 
 %HMCCU_STATECONTROL = (
 	'DOOR_LOCK_STATE_TRANSMITTER' => {
-		F => 3, S => 'LOCK_STATE', C => 'LOCK_TARGET_LEVEL', V=> 'open:2,unlock:1,lock:3', P =>	2
+		F => 1, S => 'LOCK_STATE', C => 'LOCK_TARGET_LEVEL', V=> 'unlock:1,open:2,lock:3', P =>	2
 	},
 	'SHUTTER_CONTACT'  => {
 		F => 3, S => 'STATE', C => '', V => '', P => 2
@@ -250,8 +250,8 @@ $HMCCU_CONFIG_VERSION = '4.8.032';
 
 %HMCCU_ROLECMDS = (
 	'DOOR_LOCK_STATE_TRANSMITTER' => {
-		'open' => 'V:LOCK_TARGET_LEVEL:2',
-		'unlock' => 'V:LOCK_TARGET_LEVEL:1',
+		'open' => 'V:LOCK_TARGET_LEVEL:1',
+		'unlock' => 'V:LOCK_TARGET_LEVEL:2',
 		'lock' => 'V:LOCK_TARGET_LEVEL:3'
 	},
 	'MOTIONDETECTOR_TRANSCEIVER' => {
@@ -509,7 +509,7 @@ $HMCCU_CONFIG_VERSION = '4.8.032';
 		'PRESS_LONG' =>  { '1' => 'pressed', 'true' => 'pressed' }
 	},
 	'DOOR_LOCK_STATE_TRANSMITTER' => {
-		'STATE' => { '1' => 'locked', '2' => 'open', '3' => 'unlocked', 'LOCKED' => 'locked', 'OPEN' => 'open', 'UNLOCKED' => 'unlocked',  }
+		'STATE' => { '1' => 'unlocked', '2' => 'open', '3' => 'locked', 'LOCKED' => 'locked', 'OPEN' => 'open', 'UNLOCKED' => 'unlocked',  }
 	},
 	'SHUTTER_CONTACT' => {
 		'STATE' => { '0' => 'closed', '1' => 'open', 'false' => 'closed', 'true' => 'open' }
@@ -822,11 +822,13 @@ $HMCCU_CONFIG_VERSION = '4.8.032';
 	"HmIP-DLD" => {
 	_description     => "Türschlossantrieb",
 	_channels        => "1",
-	statedatapoint   => "1.LOCK_STATE",
 	controldatapoint => "1.LOCK_TARGET_LEVEL",
+	devStateIcon	 => "UNLOCKED:secur_open@red:lock LOCKED:secur_locked@lime:unlock",
+	statedatapoint   => "1.LOCK_STATE",
 	statevals        => "unlock:UNLOCKED,open:OPEN,lock:LOCKED",
-	substitute       => "STATE!(UNLOCKED|1):unlock,(LOCKED|3):lock,(OPEN|2):open",
+	substitute       => "STATE!(UNLOCKED|1):unlock,(OPEN|2):open,(LOCKED|3):lock",
 	webCmd           => "lock:unlock:open"	
+	cmdIcon          => "unlock:secur_open lock:secur_locked open:fts_door_right_open",
 	},
 	"HM-SCI-3-FM" => {
 	_description     => "3 Kanal Schliesserkontakt",
@@ -1266,14 +1268,6 @@ $HMCCU_CONFIG_VERSION = '4.8.032';
 	substitute       => "STATE!(true|1):on,(false|0):off",
 	webCmd           => "control",
 	widgetOverride   => "control:uzsuToggle,off,on"		
-	},
-	"HmIP-DLD" => {
-	_description     => "Türschlossantrieb",
-	cmdIcon          => "unlock:secur_open lock:secur_locked open:fts_door_right_open",
-	controldatapoint => "1.LOCK_TARGET_LEVEL",
-	eventMap         => "/datapoint 1.LOCK_TARGET_LEVEL 2:open/datapoint 1.LOCK_TARGET_LEVEL 1:unlock/datapoint 1.LOCK_TARGET_LEVEL 3:lock/",
-	statedatapoint   => "1.LOCK_STATE",
-	webCmd           => "lock:unlock:open"
 	},
 	"HM-LC-SW4-BA-PCB|HM-SCI-3-FM" => {
 	_description     => "4 Kanal Funk Schaltaktor für Batteriebetrieb, 3 Kanal Schließerkontakt",
